@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mongo:
+    container_name: gm.mongo
+    image: mongo:latest
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: mongo
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: test
+    ports:
+      - "27077:27017"
+
+networks:
+  default:
+    name: gm
+
+volumes:
+  mongo: { name: gm.mongo }

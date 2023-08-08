@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -19,8 +20,14 @@ public class StudentEntity {
 
     @Id
     private String id;
+
     public String name;
+
     private String email;
+
+    @DBRef
     private DepartmentEntity department;
+
+    @DBRef
     private List<SubjectEntity> subjects;
 }

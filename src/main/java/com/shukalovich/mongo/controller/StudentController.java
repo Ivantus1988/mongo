@@ -1,6 +1,8 @@
 package com.shukalovich.mongo.controller;
 
 import com.shukalovich.mongo.entity.StudentEntity;
+import com.shukalovich.mongo.repository.DepartmentRepository;
+import com.shukalovich.mongo.repository.SubjectRepository;
 import com.shukalovich.mongo.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,9 +23,17 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final DepartmentRepository departmentRepository;
+    private final SubjectRepository subjectRepository;
 
     @PostMapping("/create")
     public StudentEntity createStudent(@RequestBody StudentEntity student) {
+        if (student.getDepartment() != null) {
+            departmentRepository.save(student.getDepartment());
+        }
+        if (student.getSubjects() != null && student.getSubjects().size() > 0) {
+            subjectRepository.saveAll(student.getSubjects());
+        }
         return studentService.createStudent(student);
     }
 
@@ -93,5 +103,10 @@ public class StudentController {
     @GetMapping("/nameStartWith")
     public List<StudentEntity> nameStartWith(@RequestParam String name) {
         return studentService.nameStartWith(name);
+    }
+
+    @GetMapping("/byDepartmentId")
+    public List<StudentEntity> byDepartmentId(@RequestParam String depId) {
+        return studentService.byDepartmentId(depId);
     }
 }

@@ -37,7 +37,7 @@ public class StudentService {
     }
 
     public List<StudentEntity> getStudentsByName(String name) {
-        return studentRepository.findByName(name);
+        return studentRepository.getByName(name);
     }
 
     public List<StudentEntity> getStudentsByNameAndEmail(String name, String email) {
@@ -74,5 +74,9 @@ public class StudentService {
 
     public List<StudentEntity> nameStartWith(String name) {
         return studentRepository.findAllByNameStartsWith(name);
+    }
+
+    public List<StudentEntity> byDepartmentId(String depId) {
+        return studentRepository.findByDepartment_Id(depId);
     }
 }
